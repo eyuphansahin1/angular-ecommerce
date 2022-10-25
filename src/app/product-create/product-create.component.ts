@@ -20,14 +20,6 @@ export class ProductCreateComponent implements OnInit {
     price: 20000,
     categoryId: "0"
   };
-  // two-way binding
-
-  // ngModel => control
-  // ngForm => form
-
-  // valid - invalid
-  // pristine - dirty
-  // touched - untouched
 
   constructor(
     private productService: ProductService,
