@@ -1,3 +1,4 @@
+import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -13,6 +14,7 @@ export class AuthComponent implements OnInit {
 
   isLoginMode: boolean = true;
   loading: boolean = false;
+  error: string = "";
 
   constructor(private authService: AuthService) { }
 
@@ -40,9 +42,15 @@ export class AuthComponent implements OnInit {
       authResponse = this.authService.register(email, password);
     }
 
-    authResponse.subscribe(response=> {
-      this.loading = false;
-      console.log(response);
+    authResponse.subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.error = "";
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err;
+      }
     });
 
   }
