@@ -44,6 +44,7 @@ export class AuthComponent implements OnInit {
 
     authResponse.subscribe({
       next: (response) => {
+        console.log(response);
         this.loading = false;
         this.error = "";
       },
