@@ -1,6 +1,7 @@
 import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../models/auth-response';
 import { AuthService } from '../services/auth.service';
@@ -16,7 +17,10 @@ export class AuthComponent implements OnInit {
   loading: boolean = false;
   error: string = "";
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -43,10 +47,10 @@ export class AuthComponent implements OnInit {
     }
 
     authResponse.subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
         this.loading = false;
         this.error = "";
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.loading = false;
