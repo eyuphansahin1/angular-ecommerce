@@ -41,6 +41,20 @@ export class AuthService {
     );
   }
 
+  autoLogin() {
+    if(localStorage.getItem("user") == null) {
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const loadedUser = new User(user.email, user.id,user._token, new Date(user._tokenExpirationDate));
+
+    if(loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
+
   private handleError(err: HttpErrorResponse) {
     let message = "hata oluştu";
 
@@ -75,8 +89,8 @@ export class AuthService {
       expirationDate
     );
 
-    console.log(user);
-
     this.user.next(user);
+
+    localStorage.setItem("user", JSON.stringify(user));
   }
 }
